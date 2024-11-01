@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Players for Team</title>
+    <h:outputStylesheet name="css/style.css" />
+</h:head>
+<h:body>
+
+    <div class="navbar">
+        <h:link value="Teams" outcome="index" styleClass="nav-link" />
+        <h:link value="Leagues" outcome="league" styleClass="nav-link" />
+        <h:link value="Back to myBAtis teams page" outcome="/myBatis/teams" styleClass="nav-link" />
+    </div>
+
+    <h2 class="header">Players playing in #{playersForTeam.team.name} team:</h2>
+    <ol class="dataTable">
+        <ui:repeat value="#{playersForTeam.team.players}" var="player">
+            <li>#{player.name}</li>
+        </ui:repeat>
+    </ol>
+
+    <h:form>
+        <h:panelGrid columns="2" styleClass="form-grid">
+            <h:outputLabel for="playerName" value="Name:" />
+            <h:inputText id="playerName" a:placeholder="name" value="#{playersForTeam.playerToCreate.name}" required="true" requiredMessage="Player name is required." />
+        </h:panelGrid>
+
+        <h:commandButton value="Add player to the team" action="#{playersForTeam.createPlayer}" class="commandButton">
+            <f:param name="teamId" value="#{playersForTeam.team.id}" />
+        </h:commandButton>
+    </h:form>
+
+</h:body>
+</html>

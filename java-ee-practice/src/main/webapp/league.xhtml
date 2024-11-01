@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Leagues</title>
+    <h:outputStylesheet name="css/style.css" />
+</h:head>
+<h:body>
+
+    <div class="navbar">
+        <h:link value="Teams" outcome="index" styleClass="nav-link" />
+        <h:link value="Leagues" outcome="league" styleClass="nav-link" />
+    </div>
+
+    <h:form>
+        <h3 class="header">Create a new league: </h3>
+        <h:panelGrid columns="2" styleClass="form-grid">
+            <h:outputLabel for="leagueName" value="League Name:" />
+            <h:inputText id="leagueName" value="#{leagues.leagueToCreate.name}" required="true" requiredMessage="League name is required." />
+
+            <h:outputLabel for="leagueShortName" value="Short Name:" />
+            <h:inputText id="leagueShortName" value="#{leagues.leagueToCreate.shortName}" required="true" requiredMessage="Short name is required." />
+        </h:panelGrid>
+
+        <h:commandButton value="Create League" actionListener="#{leagues.createLeague}" action="league?faces-redirect=true" class="commandButton" />
+    </h:form>
+
+    <ui:repeat value="#{leagues.allLeagues}" var="league">
+        <h1 class="header">#{league.name} (#{league.shortName}):</h1>
+        <h2 class="header">Teams: </h2>
+        <ol class="dataTable">
+            <ui:repeat value="#{league.teams}" var="team">
+                <li><h:link value="#{team.name}" outcome="players?teamId=#{team.id}" /></li>
+            </ui:repeat>
+        </ol>
+    </ui:repeat>
+
+</h:body>
+</html>
